@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>Fire</title>
+	<author>Angela Shiflet</author>
+	<parameter id="probCatch">.40</parameter>
+        <generateRandom>True</generateRandom>
+        <randomWidth>50</randomWidth>
+        <randomHeight>50</randomHeight>
+</simulation>

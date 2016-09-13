@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>SugarscapeBasic</title>
+	<author>Epstein and Axtell</author>
+	<parameter id="maxSugar">4</parameter>
+        <parameter id="sugarGrowBack">1</parameter>
+	<initialStates>
+        <row>1000000001</row>
+        <row>0000001000</row>
+        <row>1000000001</row>
+        <row>0001000000</row>
+        <row>1000000001</row>
+        <row>0000101000</row>
+        <row>1000000001</row>
+        <row>0000100000</row>
+        <row>1010000001</row>
+        <row>0000100000</row>
+	</initialStates>
+</simulation>

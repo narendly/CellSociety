@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>Segregation</title>
+	<author>Thomas Schelling</author>
+	<parameter id="threshold">.30</parameter>
+	<generateRandom>True</generateRandom>
+    <randomWidth>50</randomWidth>
+    <randomHeight>50</randomHeight>
+</simulation>

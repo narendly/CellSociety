@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>GameOfLife</title>
+	<author>John Conway</author>
+
+	<initialStates>
+		<row>010</row>
+		<row>110</row>
+		<row>100</row>
+	</initialStates>
+	<key>test</key>
+</simulation>

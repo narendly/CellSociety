@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>Fire</title>
+	<author>Angela Shiflet</author>
+	<parameter id="probCatch">.40</parameter>
+	<initialStates>
+		<row>101</row>
+        <row>121</row>
+        <row>111</row>
+	</initialStates>
+	<key>test</key>
+</simulation>

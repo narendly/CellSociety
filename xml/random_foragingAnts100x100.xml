@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>ForagingAnts</title>
+	<author>Unknown</author>
+        <generateRandom>True</generateRandom>
+        <randomWidth>100</randomWidth>
+        <randomHeight>100</randomHeight>
+</simulation>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>SugarscapeAdvanced</title>
+	<author>Epstein and Axtell</author>
+	<parameter id="maxSugar">4</parameter>
+        <parameter id="sugarGrowBack">1</parameter>
+        <parameter id="fertileLower">20</parameter>
+        <parameter id="fertileUpper">60</parameter>
+	<initialStates>
+        <row>10000000011000000001</row>
+        <row>10000000010000001000</row>
+        <row>10000100000000100001</row>
+        <row>00010001000000001000</row>
+        <row>10010000000010000001</row>
+        <row>00000000101000101000</row>
+        <row>00001010000000101000</row>
+        <row>00001000001010000000</row>
+        <row>10100000001010000001</row>
+        <row>00001000000001010000</row>
+	</initialStates>
+</simulation>

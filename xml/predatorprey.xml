@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>Wator</title>
+	<author>Mike Scott</author>
+	<parameter id="preyBreedTime">4</parameter>
+	<parameter id="predatorBreedTime">8</parameter>
+    <parameter id="starveTime">5</parameter>
+	<initialStates>
+		<row>0002222000</row>
+        <row>0010000100</row>
+        <row>2222222222</row>
+        <row>0000000000</row>
+        <row>0000110000</row>
+        <row>0000110000</row>
+        <row>0000000000</row>
+        <row>2222222222</row>
+        <row>0010000100</row>
+        <row>0002222000</row>
+	</initialStates>
+	<key>test</key>
+</simulation>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>Segregation</title>
+	<author>Thomas Schelling</author>
+	<parameter id="threshold">.30</parameter>
+	<parameter id="sadfasdf">.30</parameter>
+	<initialStates>
+		<row>0102111021</row>
+		<row>2102101201</row>
+		<row>1122102112</row>
+        <row>0102111021</row>
+		<row>2102101201</row>
+        <row>0102111021</row>
+		<row>2102101201</row>
+        <row>0102111021</row>
+		<row>2102101201</row>
+        <row>2102101201</row>
+	</initialStates>
+	<key>test</key>
+</simulation>

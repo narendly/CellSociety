@@ -1,0 +1,6 @@
+## Pair Review Refactor
+#### Ryan St.Pierre(ras70) David Maydew(dmm68)
+I chose to refactor this section because when it showed up in the duplicated code check, it was clear that this code would duplicated again when we implemented one of the extensions. Rather than have the code be further duplicated, I extracted the process into a method that simply accepts the name of a tag as a parameter and returns the resulting collection. Although the later functionality of the information is used differently, I was able to condense the portion of the code that fetched the information. Although I didn't write this specific piece of code, I may be working with this component of the project during this sprint and would like to make sure there is no duplication
+
+## Checklist Refactoring
+I chose to refactor this section because it contained a large amount of printStackTrace() method calls without proper handling of exceptions. We learned about handling exceptions last week, and I wanted to practice that on this component of the code. The previous implementation is bad because it masks the occurrence of an error and simply continues as if nothing bad happened. The better approach is to throw an error with the appropriate message so that the caller has to deal with that error. 

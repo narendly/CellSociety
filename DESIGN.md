@@ -1,0 +1,64 @@
+CompSci 308: Cell Society Design Document
+===================
+Sophie Guo, Hunter Lee, David Maydew
+## Introduction
+In this project, the problem we are trying to solve is to simulate the behavior of Cellular Automata in a grid. The program has to be able to interact with the user, such as starting, stopping, single step, and parameter inputs. The cells have to interact with each other given a set of rules that are associated with the current simulation being run. The updating of the cells depends on their current state, and the states of neighboring cells. Initial configuration is passed in via XML, including the type of simulation being run. Our main design goals for this project are to have cells be closed in the sense that they handle their own updates, and also to allow future simulations the ability to easily alter how its cells update, how its cells are visualized, and the different states that a cell can take on. The overall group of cells are managed by the grid they are a member of, which also handles their placement on the screen. From there, buttons allow the user to interact with simulation currently being run or to start a new simulation. 
+## Overview
+
+![UML Diagram](https://github.com/duke-compsci308-spring2016/cellsociety_team08/blob/master/UMLdiagram.png?raw=true)
+
+Our program is divided up into three parts: Simulation, Grid, and Cell. As shown in the UML diagram above, the primary purpose of the Simulation class, working in conjunction with Main and Configuration, is to prepare and set up an environment in which the program can run its simulation. In other words, it creates a backdrop against which the Grid and Cell classes can interact. As such, this component has functionalities such as parsing the given XML file, providing necessary parameters and variables in a Configuration class, and the Main class in which the program can start the simulation. As the diagram suggests, this group of classes work and use each other seamlessly to provide a framework for simulation.
+The second part of the program is Grid. Grid is used as a container for individual cells that are created at initialization. It also serves as a manager of cells throughout each lifecycle of the simulation. As such, it will have a container such as a 2D List that can house Cell classes needed to run the simulation. The Grid class itself exists as a superclass; subclasses implement abstract methods, and this design is used to efficiently accomodate a multiple types of simulations. The Grid component works with the Simulation and the Cell components.
+The Cell component, similar to Grid, is an abstract superclass that exists to facilitate the use of different types of Cells. The purpose of the Cell class is to represent each cell, or the smallest unit in the program. They are managed by Grid and are able to communicate with their manager to retrieve information about neighboring Cells and to calculate future states. The Cell component works closely with Grid to model changes occuring in different types of simulations the program is asked to render.
+
+## User Interface
+Our user interface will consist of a fixed-size grid of cells in the top left corner of the screen, where the individual cell size depends on the number of cells in the grid. There will be a set of buttons at the bottom of the screen, including Start, Pause, LoadXML, Step, and speed up and slow down buttons to manage the simulation speed. The user will be able to start a different (or new) simulation using the LoadXML button. When the simulation has stabilized, text will appear notifying the user that the simulation has completed. For this implementation of the game, we do not need to handle displaying error messaged in the case of malformed data.
+
+
+![UI Design Startup](https://github.com/duke-compsci308-spring2016/cellsociety_team08/blob/master/uidesign1.png?raw=true)
+![UI Design Complete](https://github.com/duke-compsci308-spring2016/cellsociety_team08/blob/master/uidesign2.png?raw=true)
+## Design Details
+#### Grid:
+The Grid class is an abstract superclass that extends GridPane.  Grid is designed to be a container for all the cells, so one of its instance variables is a 2-d array of cell objects. It has an initialize method which takes in a Parameter object, initializes the grid and the cells accordingly, and delivers the visualization. This method would be overridden by subclasses since the grid for different type of simulation consists of different types/classes of cells. Then it has a getNeighbors method which takes in 2-d array indices x and y, and returns all the neighboring cells of that cell. This method would also be overridden by since different simulations have different update rules, which require different amounts of neighbor information. This method provides each cell object the information it needs to calculate its next state. The updateCells method calls the calculateNextState and update method on all the cells. Last but no least, Grid class has a method named areCellsStable which check if the grid has reached its stationary distribution - all the cells in the grid are stable/not changing. This is to help the simulation to decide when to stop. 
+#### Cell Class:
+This is the superclass for all types of cells used in the different simulations.  We have cell class extend Shape for now so that it can be visualized on a scene directly. The Shape class can accommodate basic geometric shapes such as rectangle, triangle, etc, thereby giving cells more flexibility in visual representations.  Cell properties such as state, color, location are coded as instance variables. These properties can be retrieved through getter methods such as getState. To accommodate the update feature, cell class has a method called calculateNextState which takes cell objects as inputs (the result of calling findNeighbors on the grid object), finds its neighbors' information through cell object's getter methods, calculates its next state and stores it in an instance variable called nextState. It also has a method called updateCell which updates the current state of the cell to nextState. Because the application needs to know when to stop, the cell object has an object isStable which first calls calculateNextState and then checks if the resulting nextState is the same as its current state. 
+#### Configuration:
+This class encapsulates the information read from the XML file. It store s all the initial configuration information such as the name of the simulation, the Grid's setup information and some global parameters. This class has getter and setter methods to extract/modify the values of its instance variables.
+#### Simulation:
+The simulation class implements the actual simulation. It has an instance variable called myGrid. The promptUser method prompts user for the initial configuration XML file and then returns the path to the file. The parseXML method parses the XML file uploaded by the user and returns a Configuration object. The initializeGrid method takes the Configuration object as input, identifies the game type, initializes myGrid to be the corresponding grid object and calls the initialize method on the grid object. The startSimulation method animates the changes in the cell states. This class also contains a number of user interface components such as buttons to start, stop, resume, fast forward, fast backward. 
+#### Main:
+Main extends Applications and provides the stage for the simulation. Its methods include init(), and start(), which launches the simulation. 
+## Design Considerations
+* We chose to have the cell class handle calculating its next update state. We chose this versus having the grid handle the rules for updating a cell so that a cell can easily base its next state based off its current state, increasing the 'closedness' of this class. One con of this decision is that sometimes the grid has to pass the cell certain information (such as its neighboring cells) for it to calculate its next state. This design assumes that each cell subclass knows the rules for how to update itself.
+* We spoke at length about whether or not Cell should extend the Shape class, essentially deciding whether or not Cell would represent just the state of a cell or also its visualization. We chose to go with having Cell extend the Shape class in some way, because it would facilitate the process of visualizing a certain cell. One con is that it may have to be modified to allow for more complex visualizations in future simulations. Since we have a class for each type of cell, this approach still allows the flexibility to decide which shape each cell is visualized as. 
+* Using a configuration class to encapsulate all of the parameters specified in the XML file, including initial state. This configuration class would encapsulate all of information that is passed in the XML to be used in the Simulation and Grid classes. The pro of this format is that it accommodates for the different configuration parameters depending on the simulation being run. One of the cons of this approach that we discussed is that at times, it will involve passing more information to other classes than is needed.
+* Using speed up/down buttons instead of user entered speed value or slider. This choice was done to improve the simplicity of the UI. Instead of having to check a textbox for a changed value, or perhaps polling a slider, we can let a button click decide when we need to change the duration of a timeline frame. The con of this is that it isn't the prettiest way to design the UI, which we figured was OK since the handout emphasizes that the UI can be very rudimentary. 
+* Enumeration for different cell states, specific to each cell subclass. This choice was made to accommodate for cells/simulations where a cell can take on more than two (boolean) states. As such, an enumeration of states allow us to cleanly pass state information back and forth between cells, while at the same time being explicit about what a certain state enumeration represents. Furthermore, this standardizes the format of the initial state that is passed in the XML document.
+* Having main or simulation extend application (multiple simulations concurrently. We chose to have a separate Main class that extends application and launches the simulation class. This decision was made to improve the flexibility of being able to run multiple simulations concurrently. Furthermore, it follows the design in Professor Duvall's Example Game. 
+* Different grid subclass for each simulation. This decision was made to handle situations where the cells of different simulations are visualized differently. Furthermore, it allows us to better encapsulate the information being sent when updating a cell. E.g., only sending the neighbors that are applicable in this simulation. The con of this decision is that for the implementation in the first sprint, some of these subclasses may be relatively short since they just follow the default behavior provided in our abstract Grid class. 
+## Team Responsibilities
+* Sophie = Cell + Cell subclasses, secondary: Main/Simulation
+* Hunter = Main/Simulation and XML Configuration, secondary: Grid + Grid subclasses
+* David = Grid + grid subclasses, secondary: Cell + Cell subclasses
+
+For our high-level plan, we plan to initially work on our primary responsibility components, then meet early in the week to discuss difficulties/feedback. From there we will revise our design and continue implementing our primary responsibility. As the week continues, we will begin to focus on which areas of the program need the most work, as well as checking to make sure that our different components link together smoothly. 
+
+----------
+### Use Cases:
+
+#### Apply the rules to a middle cell:
+* For Game of Life simulation, we would create a GameOfLifeCell class which extends from the Cell class. The calculateNextState method in this class finds the states of its eight neighbors and calculates the cell's next state based on the information.
+
+* To set the next state of a middle cell, we first find the cell in the 2-d array of GameOfLifeCell objects in the Grid object and call its calculateNextState method to find and set its next state. 
+
+#### Apply the rules to an edge cell:
+* The calculateNextState method in GameOfLifeCell class deals with cells that are out of boundary.
+
+#### Move to the next generation:
+* Call the update method on Grid, which in turn calls the calculateNextState method and the update method on all the cells it contains. 
+
+#### Set a simulation parameter:
+* Call the setter method on Configuration to set parameter values.
+
+#### Switch simulations:
+* The user can stop the current Game of Life simulation by clicking the Load XML button, which would stop the current simulation. After the new configuration file is loaded, the simulation would reinitialize myGrid to be WatorGrid and start the new simulation.

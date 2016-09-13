@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<simulation>
+	<title>GameOfLife</title>
+	<author>Angela Shiflet</author>
+        <generateRandom>True</generateRandom>
+        <randomWidth>50</randomWidth>
+        <randomHeight>50</randomHeight>
+</simulation>
