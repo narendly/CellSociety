@@ -1,0 +1,2 @@
+# CellSociety
+Cellular Automata simulator
